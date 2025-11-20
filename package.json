@@ -12,6 +12,8 @@
     "fix": "prettier --write . && eslint --fix"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@react-router/node": "^7.9.6",
     "@react-router/serve": "^7.9.6",
     "antd": "^5.29.1",
