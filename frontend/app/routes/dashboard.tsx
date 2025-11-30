@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Layout,
   Menu,
@@ -25,14 +25,10 @@ import {
   BellOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 const { Header, Content, Sider } = Layout;
 const { Title, Text } = Typography;
-
-interface User {
-  fullName?: string;
-  username?: string;
-}
 
 const recentActivityData = [
   {
@@ -96,22 +92,19 @@ const columns = [
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, isAuthenticated, logout } = useAuth();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   useEffect(() => {
-    const currentUser = localStorage.getItem("currentUser");
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
-    } else {
+    if (!isAuthenticated) {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [isAuthenticated, navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("currentUser");
+    logout();
     navigate("/login");
   };
 
@@ -176,7 +169,7 @@ export default function Dashboard() {
                 icon={<UserOutlined />}
               />
               <div className="hidden md:block">
-                <Text strong>{user.fullName}</Text>
+                <Text strong>{user.name}</Text>
               </div>
             </Space>
             <Button
