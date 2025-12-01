@@ -21,3 +21,24 @@ export interface SignupCredentials {
   password: string;
   name: string;
 }
+
+export interface Todo {
+  id: string;
+  userId: string;
+  title: string;
+  description?: string;
+  completed: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateTodoInput {
+  title: string;
+  description?: string;
+}
+
+export interface UpdateTodoInput {
+  title?: string;
+  description?: string;
+  completed?: boolean;
+}

@@ -1,34 +1,26 @@
 import { useEffect } from "react";
 import {
-  Layout,
-  Menu,
-  Typography,
-  Button,
   Card,
   Statistic,
   Row,
   Col,
-  Avatar,
   Space,
   Table,
   Tag,
-  theme,
+  Typography,
+  Avatar,
 } from "antd";
 import {
   UserOutlined,
-  DashboardOutlined,
-  LogoutOutlined,
   TeamOutlined,
   RiseOutlined,
   DollarOutlined,
-  ShoppingOutlined,
-  BellOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import { AppLayout } from "../components/AppLayout";
 
-const { Header, Content, Sider } = Layout;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const recentActivityData = [
   {
@@ -92,10 +84,7 @@ const columns = [
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout } = useAuth();
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -103,150 +92,70 @@ export default function Dashboard() {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   if (!user) return null;
 
   return (
-    <Layout className="min-h-screen!">
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        style={{ background: "#001529" }}
-        width={250}
-      >
-        <div className="h-16 m-4 flex items-center justify-center">
-          <Title level={4} style={{ color: "white", margin: 0 }}>
-            Simple Dashboard
-          </Title>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <DashboardOutlined />,
-              label: "Dashboard",
-            },
-            {
-              key: "2",
-              icon: <TeamOutlined />,
-              label: "Users",
-            },
-            {
-              key: "3",
-              icon: <ShoppingOutlined />,
-              label: "Orders",
-            },
-            {
-              key: "4",
-              icon: <UserOutlined />,
-              label: "Profile",
-            },
-          ]}
-        />
-      </Sider>
-      <Layout>
-        <Header
-          style={{
-            padding: "0 24px",
-            background: colorBgContainer,
-            display: "flex",
-            justifyContent: "right",
-            alignItems: "center",
-          }}
-        >
-          <Space size="large">
-            <Button type="text" icon={<BellOutlined />} />
-            <Space>
-              <Avatar
-                style={{ backgroundColor: "#87d068" }}
-                icon={<UserOutlined />}
-              />
-              <div className="hidden md:block">
-                <Text strong>{user.name}</Text>
-              </div>
-            </Space>
-            <Button
-              type="text"
-              icon={<LogoutOutlined />}
-              onClick={handleLogout}
-              danger
-            >
-              Logout
-            </Button>
-          </Space>
-        </Header>
-        <Content style={{ margin: "24px 16px 0" }}>
-          <div
-            style={{ padding: 24, minHeight: 360, background: "transparent" }}
-          >
-            <Row gutter={[16, 16]} className="mb-6">
-              <Col xs={24} sm={8}>
-                <Card
-                  variant="borderless"
-                  className="shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <Statistic
-                    title="Total Sales"
-                    value={112893}
-                    precision={2}
-                    valueStyle={{ color: "#3f8600" }}
-                    prefix={<DollarOutlined />}
-                    suffix=""
-                  />
-                </Card>
-              </Col>
-              <Col xs={24} sm={8}>
-                <Card
-                  variant="borderless"
-                  className="shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <Statistic
-                    title="Active Users"
-                    value={2456}
-                    prefix={<TeamOutlined />}
-                    valueStyle={{ color: "#1677ff" }}
-                  />
-                </Card>
-              </Col>
-              <Col xs={24} sm={8}>
-                <Card
-                  variant="borderless"
-                  className="shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <Statistic
-                    title="Growth Rate"
-                    value={15.4}
-                    precision={1}
-                    valueStyle={{ color: "#cf1322" }}
-                    prefix={<RiseOutlined />}
-                    suffix="%"
-                  />
-                </Card>
-              </Col>
-            </Row>
-
+    <AppLayout>
+      <div style={{ padding: 24, minHeight: 360, background: "transparent" }}>
+        <Row gutter={[16, 16]} className="mb-6">
+          <Col xs={24} sm={8}>
             <Card
-              title="Recent Activity"
               variant="borderless"
-              className="shadow-sm"
+              className="shadow-sm hover:shadow-md transition-shadow"
             >
-              <Table
-                columns={columns}
-                dataSource={recentActivityData}
-                pagination={false}
-                size="middle"
+              <Statistic
+                title="Total Sales"
+                value={112893}
+                precision={2}
+                valueStyle={{ color: "#3f8600" }}
+                prefix={<DollarOutlined />}
+                suffix=""
               />
             </Card>
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Card
+              variant="borderless"
+              className="shadow-sm hover:shadow-md transition-shadow"
+            >
+              <Statistic
+                title="Active Users"
+                value={2456}
+                prefix={<TeamOutlined />}
+                valueStyle={{ color: "#1677ff" }}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Card
+              variant="borderless"
+              className="shadow-sm hover:shadow-md transition-shadow"
+            >
+              <Statistic
+                title="Growth Rate"
+                value={15.4}
+                precision={1}
+                valueStyle={{ color: "#cf1322" }}
+                prefix={<RiseOutlined />}
+                suffix="%"
+              />
+            </Card>
+          </Col>
+        </Row>
+
+        <Card
+          title="Recent Activity"
+          variant="borderless"
+          className="shadow-sm"
+        >
+          <Table
+            columns={columns}
+            dataSource={recentActivityData}
+            pagination={false}
+            size="middle"
+          />
+        </Card>
+      </div>
+    </AppLayout>
   );
 }
