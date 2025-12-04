@@ -1,18 +1,12 @@
 import api from "./api";
-import type { Todo, CreateTodoInput, UpdateTodoInput } from "../types";
-
-interface TodoResponse {
-  message: string;
-  data: Todo;
-}
-
-interface TodoListResponse {
-  data: Todo[];
-}
-
-interface DeleteResponse {
-  message: string;
-}
+import type {
+  Todo,
+  CreateTodoInput,
+  UpdateTodoInput,
+  TodoListResponse,
+  TodoResponse,
+  TodoDeleteResponse,
+} from "../types";
 
 export const todoService = {
   async getAll(): Promise<Todo[]> {
@@ -31,7 +25,7 @@ export const todoService = {
   },
 
   async delete(id: string): Promise<string> {
-    const { data } = await api.delete<DeleteResponse>(`/todo/${id}`);
+    const { data } = await api.delete<TodoDeleteResponse>(`/todo/${id}`);
     return data.message;
   },
 };

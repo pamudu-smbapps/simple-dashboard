@@ -42,3 +42,16 @@ export interface UpdateTodoInput {
   description?: string;
   completed?: boolean;
 }
+
+export interface TodoResponse {
+  message: string;
+  data: Todo;
+}
+
+export interface TodoListResponse {
+  data: Todo[];
+}
+
+export interface TodoDeleteResponse {
+  message: string;
+}

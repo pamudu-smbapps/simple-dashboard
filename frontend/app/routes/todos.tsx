@@ -5,7 +5,7 @@ import {
   useActionData,
   useNavigation,
 } from "react-router";
-import { todoService } from "../services/todo.service";
+import { todoService } from "../services/todoService";
 import { AddTodo } from "../components/todo/AddTodo";
 import { TodoItem } from "../components/todo/TodoItem";
 import { AppLayout } from "../components/AppLayout";
