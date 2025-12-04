@@ -55,3 +55,10 @@ export interface TodoListResponse {
 export interface TodoDeleteResponse {
   message: string;
 }
+
+export interface TodoStats {
+  total: number;
+  completed: number;
+  pending: number;
+  newest: Array<Todo>;
+}

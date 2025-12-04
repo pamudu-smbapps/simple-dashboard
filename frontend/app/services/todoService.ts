@@ -3,6 +3,7 @@ import type {
   Todo,
   CreateTodoInput,
   UpdateTodoInput,
+  TodoStats,
   TodoListResponse,
   TodoResponse,
   TodoDeleteResponse,
@@ -27,5 +28,10 @@ export const todoService = {
   async delete(id: string): Promise<string> {
     const { data } = await api.delete<TodoDeleteResponse>(`/todo/${id}`);
     return data.message;
+  },
+
+  async getStats(): Promise<TodoStats> {
+    const { data } = await api.get<{ data: TodoStats }>(`/todo/stats`);
+    return data.data;
   },
 };

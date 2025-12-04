@@ -88,3 +88,19 @@ export function deleteTodo(req: Request, res: Response): void {
 
   res.json({ message: "Todo deleted" });
 }
+
+export function getTodoStats(req: Request, res: Response): void {
+  const todos = Todo.findAllByUserId(req.user!.userId);
+
+  const total = todos.length;
+  const completed = todos.filter((t) => t.completed).length;
+  const pending = total - completed;
+
+  const newest = todos
+    .slice()
+    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .slice(0, 3)
+    .map((t) => t.toJSON());
+
+  res.json({ data: { total, completed, pending, newest } });
+}
